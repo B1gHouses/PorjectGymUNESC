@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="C:\Users\lab001a\Desktop\ProjectGymUNESC\3 - libs"/>
+		<item value="C:\Users\lab001a\Desktop\ProjectGymUNESC\2 - Images"/>
+		<item value="C:\Users\lab001a\Desktop\ProjectGymUNESC\1 - MainOfProject"/>
+	</list>
+	<section name="SmartImportWizard">
+		<item key="SmartImportRootWizardPage.STORE_HIDE_ALREADY_OPEN" value="false"/>
+		<item key="SmartImportRootWizardPage.STORE_CLOSE_IMPORTED" value="false"/>
+		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
+		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
+		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\victo\Desktop\ProjectGymUNESC\ClassImageLibrary"/>
+			<item value="C:\Users\victo\Desktop\ProjectGymUNESC\ClassMainLibrary"/>
+			<item value="C:\Users\victo\Desktop\ClassWindows"/>
+			<item value="C:\Users\victo\Desktop\ProjectGymUNESC\2 - Images"/>
+			<item value="C:\Users\victo\Desktop\ProjectGymUNESC\1 - MainOfProject"/>
+			<item value="C:\Users\victo\Desktop\ProjectGymUNESC\ClassLibrary"/>
+			<item value="C:\Users\victo\Desktop\ProjectGymUNESC\ClassWindows"/>
+			<item value="C:\Users\VCASAGRANDE\Desktop\12\ProjectGymUNESC\3 - Libs"/>
+			<item value="C:\Users\VCASAGRANDE\Desktop\12\ProjectGymUNESC\ClassWindows"/>
+			<item value="C:\Users\VCASAGRANDE\Desktop\12\ProjectGymUNESC\2 - Images"/>
+			<item value="C:\Users\VCASAGRANDE\Desktop\12\ProjectGymUNESC\1 - MainOfProject"/>
+			<item value="C:\Users\VCASAGRANDE\Desktop\12\ProjectGymUNESC\createClientLib"/>
+			<item value="C:\Users\victo\Documents\ProjectGymUNESC\3 - libs"/>
+			<item value="C:\Users\victo\Documents\ProjectGymUNESC\2 - Images"/>
+			<item value="C:\Users\victo\Documents\ProjectGymUNESC\1 - MainOfProject"/>
+			<item value="C:\Users\VCASAGRANDE\Desktop\Programação\ProjectGymUNESC\3 - libs"/>
+			<item value="C:\Users\VCASAGRANDE\Desktop\Programação\ProjectGymUNESC\2 - Images"/>
+			<item value="C:\Users\VCASAGRANDE\Desktop\Programação\ProjectGymUNESC\1 - MainOfProject"/>
+		</list>
+	</section>
+</section>
