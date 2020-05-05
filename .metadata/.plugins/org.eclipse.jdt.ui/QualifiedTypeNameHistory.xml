@@ -35,6 +35,17 @@
 <fullyQualifiedTypeName name="PackageGraphicWindows.windowClient"/>
 <fullyQualifiedTypeName name="java.lang.Exception"/>
 <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
-<fullyQualifiedTypeName name="PackageGraphicWindows.windowLogin"/>
 <fullyQualifiedTypeName name="javax.swing.JLabel"/>
+<fullyQualifiedTypeName name="PackageDatabase.dao.AbstractDAO"/>
+<fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+<fullyQualifiedTypeName name="java.sql.SQLException"/>
+<fullyQualifiedTypeName name="java.lang.Object"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.sql.ResultSet"/>
+<fullyQualifiedTypeName name="java.sql.Connection"/>
+<fullyQualifiedTypeName name="PackageDatabase.connectionFactory"/>
+<fullyQualifiedTypeName name="PackageDatabase.dao.UsuarioDAO"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="PackageDatabase.model.Usuario"/>
+<fullyQualifiedTypeName name="PackageGraphicWindows.windowLogin"/>
 </qualifiedTypeNameHistroy>

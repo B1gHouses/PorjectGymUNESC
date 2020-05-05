@@ -1,12 +1,19 @@
 package PackageGraphicWindows;
 
 import java.awt.Font;
+import java.sql.Connection;
+import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import PackageDatabase.connectionFactory;
+import PackageDatabase.dao.UsuarioDAO;
+import PackageDatabase.model.Usuario;
 
 public class windowLogin extends JDialog{
 
@@ -69,19 +76,22 @@ public class windowLogin extends JDialog{
 		btnLogin.addActionListener(e->{
 			
 			try {
-				if(txfLogin.getText().isEmpty()) /*txfPassword.getText().isEmpty()*/ {
-					throw new Exception("Insira o Usuário");
-				} else if((new String(txfPassword.getPassword()).trim().isEmpty())) {
-					throw new Exception("Insira a Senha");
-				} else if(txfLogin.getText().equalsIgnoreCase("Administrador") && (new String(txfPassword.getPassword()).equalsIgnoreCase("Administrador"))) {
-				} else if(txfLogin.getText().equalsIgnoreCase("Adm") && (new String(txfPassword.getPassword()).equalsIgnoreCase("Adm123"))) {
-				} else if(txfLogin.getText().equalsIgnoreCase("Administrator") && (new String(txfPassword.getPassword()).equalsIgnoreCase("7410"))) {
-				} else if(txfLogin.getText().equalsIgnoreCase("Root") && (new String(txfPassword.getPassword()).equalsIgnoreCase("un3scr3m0ta+()"))) {
-				} else {
-					throw new Exception("Usuário ou Senha Incorreto");
+				Connection conn = connectionFactory.getConnection("localhost", 3306, "ACADEMY_MASTER", "root", "root");
+				
+				if(conn!=null) {
+					UsuarioDAO users = new UsuarioDAO(conn);
+					
+					List<Object> listUsers = users.Select(null);
+					
+					for(int i=0; i<listUsers.size(); i++) {
+						Usuario user = (Usuario)listUsers.get(i);
+						System.out.println("user: " + user.getUsuario() + "password: " + user.getSenha());
+					}
+					
 				}
-				dispose();
-				new windowMenu(txfLogin.getText()).setVisible(true);	
+				
+				
+				
 			}catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage());
 			}

@@ -29,7 +29,7 @@ public class windowClient extends JDialog{
 	private windowConfigure configureGUI;
 	
 	
-	String[] combBoxTextsSex = new String[] {"Selecione", "Feminino", "Masculino"}; 
+	/*String[] combBoxTextsSex = new String[] {"Selecione", "Feminino", "Masculino"}; 
 	String[] combBoxTextsStates = new String[] 
 			{"Selecione", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES",
 					"GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE",
@@ -37,7 +37,7 @@ public class windowClient extends JDialog{
 	String[] combBoxTextsModals = new String[] {"Selecione", "Capoeira", "Muay Thai", "Jiu Jitsu"};
 
 
-	String[] combBoxTextsJiuJitsuDegree15 = new String[] {"Selecione", "Branca", "Cinza e branca", "Cinza", "Cinza e preta", "Amarela e branca", 
+	/*String[] combBoxTextsJiuJitsuDegree15 = new String[] {"Selecione", "Branca", "Cinza e branca", "Cinza", "Cinza e preta", "Amarela e branca", 
 			"Amarela", "Amarela e preta", "Laranja e branca", "Laranja", "Laranja e preta", "Verde e branca", "Verde", "Verde e preta"};
 	
 	String[] combBoxTextsJiuJitsuDegree = new String[] {"Selecione", "Branca", "Azul", "Roxa", "Marrom", "Preta", "Vermelha e preta", "Vermelha e branca", "Vermelha"};
@@ -51,11 +51,11 @@ public class windowClient extends JDialog{
 
 	String[] combBoxTextsMuayThaiDegree = new String[] {"Selecione", "Branco", "Branco com ponta vermelha", "Vermelho ponta azul clara", "Azul claro", 
 			"Azul claro ponta azul escura", "Azul escuro", "Azul escuro ponta preta", 
-			"Preto(professor)", "Preto e branco com a ponta preta", "Preto e branco com a ponta vermelha"};
+			"Preto(professor)", "Preto e branco com a ponta preta", "Preto e branco com a ponta vermelha"};*/
 	//usuario escolhe o valor e armazena banco
-	String[] combBoxTextsJiuJitsuValue = new String[] {"Selecione", /*puxa banco*/};
-	String[] combBoxTextsCapoeiraValue = new String[] {"Selecione", /*puxa banco*/};
-	String[] combBoxTextsMuayThaiValue = new String[] {"Selecione", /*puxa banco*/};
+	/*String[] combBoxTextsJiuJitsuValue = new String[] {"Selecione", puxa banco};
+	String[] combBoxTextsCapoeiraValue = new String[] {"Selecione", puxa banco};
+	String[] combBoxTextsMuayThaiValue = new String[] {"Selecione", puxa banco};*/
 	
 	JLabel lblCodClient = new JLabel();
 	JLabel lblFullName = new JLabel();
