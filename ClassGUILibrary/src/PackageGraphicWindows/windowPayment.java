@@ -1,8 +1,11 @@
 package PackageGraphicWindows;
 
-import javax.swing.JDialog;
+import java.sql.Connection;
 
-public class windowPayment extends JDialog{
+import javax.swing.JDialog;
+import javax.swing.JInternalFrame;
+
+public class windowPayment extends JInternalFrame{
 	
 	
 	
@@ -11,13 +14,15 @@ public class windowPayment extends JDialog{
 	
 	
 	
-	public windowPayment() {
+	public windowPayment(Connection conn) {
 		setSize(900,600);
 		setTitle("Pagamento");
-		setModal(true);
-		setLayout(null);
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setLocationRelativeTo(null);
+		setIconifiable(true);
+		setMaximizable(false);
+		setClosable(true);
+		setResizable(false);
+		setLocation(150, 20);
+
 		buildWindow();
 		actionsButtons();
 	}

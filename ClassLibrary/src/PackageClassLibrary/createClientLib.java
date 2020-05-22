@@ -5,15 +5,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class createClientLib  {
 	
-	private JDialog windowClient;
+	private JInternalFrame windowClient;
 	
-	public createClientLib(final JDialog dialog) {
-		windowClient = dialog;
+	public createClientLib(final JInternalFrame Frame) {
+		windowClient = Frame;
 	}
 	
 	public void chooseImageForPerson(JLabel lblImage) {

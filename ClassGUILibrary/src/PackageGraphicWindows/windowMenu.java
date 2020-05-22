@@ -1,57 +1,138 @@
 package PackageGraphicWindows;
 
+import java.awt.Color;
 import java.awt.Font;
+import java.sql.Connection;
 import java.text.ParseException;
 
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JDialog;
+import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+
+import PackageClassLibrary.classBackup;
 
 @SuppressWarnings("serial")
 public class windowMenu extends JFrame{
 
-	private JMenuBar menuBar = new JMenuBar();
-	private JMenu menuFile = new JMenu();
-	private JMenuItem menuItemConfigure = new JMenuItem();
-	private JMenuItem menuItemExit = new JMenuItem();
-	
-	JButton btnClient = new JButton();
-	JButton btnPayent = new JButton();
-	JButton btnBackupSystem = new JButton();
-	JButton btnExit = new JButton();	
-	
-	public windowMenu (final String username) { 
+		private JMenuBar menuBar = new JMenuBar();
+		
+		private JMenu menuSystem = new JMenu();
+		private JMenu menuClient = new JMenu();
+		private JMenu menuHelp = new JMenu();
+		private JMenu menuReport = new JMenu();
+		
+		private JMenuItem menuItemReports= new JMenuItem();
+		private JMenuItem menuItemHelp = new JMenuItem(); 
+		
+		private JMenuItem menuItemClient = new JMenuItem();
+		private JMenuItem menuItemClientPayment = new JMenuItem(); 
+		
+		private JMenuItem menuItemConfigure = new JMenuItem();
+		private JMenuItem menuItemCreateUser = new JMenuItem();
+		private JMenuItem menuItemExit = new JMenuItem();
+		
+		private JButton btnClient = new JButton();
+		private JButton btnPayent = new JButton();
+		private JButton btnBackupSystem = new JButton();
+		private JButton btnExit = new JButton();	
+		
+		private JDesktopPane desktop = new JDesktopPane();
+		
+		private Connection conn;
+
+	public windowMenu (final Connection conn,final String username, final int profile) {
+		this.conn = conn;
+		
 		setSize(1280, 720);
-		setTitle("Ultimate Academy V 1.0 Logado:" + username);
+		setTitle("Ultimate Academy V 1.0 Logado: " + username);
 		setLocationRelativeTo(null);
 		setLayout(null);
+		setResizable(false);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
 		buildWindow();
 		actionsButtons();
+		profilePermissions(profile);
+		
 	}
 
+	public void profilePermissions(final int profile) {
+		switch (profile) {
+		case 1:
+			menuItemCreateUser.setEnabled(false);
+			break;
+		case 2:
+			menuItemCreateUser.setEnabled(false);
+			break;
+		default:
+			break;
+		}
+	}
+	
 	public void buildWindow() {
-
+		
+		desktop = new JDesktopPane();
+		desktop.setBackground(Color.LIGHT_GRAY);
+		setContentPane(desktop);
+		
 		setJMenuBar(menuBar);
 		
-		menuFile = new JMenu("Arquivo");
-		menuBar.add(menuFile);
+		/*
+		 * Bar Menu System
+		 */
+		menuSystem = new JMenu("Sistema");
+		menuBar.add(menuSystem);
 		
 		menuItemConfigure = new JMenuItem("Configuração");
-		menuFile.add(menuItemConfigure);
+		menuSystem.add(menuItemConfigure);
+		
+		menuItemCreateUser = new JMenuItem("Criar Usuario");
+		menuSystem.add(menuItemCreateUser);
 		
 		menuItemExit = new JMenuItem("Sair");
-		menuFile.add(menuItemExit);
+		menuSystem.add(menuItemExit);
 		
 		
+		/*
+		 * Bar Menu Client
+		 */
+		
+		menuClient = new JMenu("Cliente");
+		menuBar.add(menuClient);
+		
+		menuItemClient = new JMenuItem("Cadastro");
+		menuClient.add(menuItemClient);
+		
+		menuItemClientPayment = new JMenuItem("Receber");
+		menuClient.add(menuItemClientPayment);
+		
+		/*
+		 * Bar Menu Help
+		 */
+		
+		menuReport = new JMenu("Relatório");
+		menuBar.add(menuReport);
+		
+		menuItemReports = new JMenuItem("Relatório");
+		menuReport.add(menuItemReports);
+		
+		/*
+		 * Bar Menu Help
+		 */
+		
+		menuHelp = new JMenu("Ajuda");
+		menuBar.add(menuHelp);
+		
+		menuItemHelp = new JMenuItem("Ajuda");
+		menuHelp.add(menuItemHelp);
+		
+		//End JMenu
 		
 		btnClient = new JButton("Cliente");
 		btnClient.setBounds(25, 150, 75, 70);
@@ -95,23 +176,62 @@ public class windowMenu extends JFrame{
 		});
 		
 		menuItemConfigure.addActionListener(e->{
-			new windowConfigure().setVisible(true);;
+			try {
+				windowConfigure configure = new windowConfigure(conn);
+				desktop.add(configure).setVisible(true);
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage(), "Erro abrir windowConfigure Button", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 		
+		menuItemCreateUser.addActionListener(e->{
+			try {
+				windowCreateUser createUser = new windowCreateUser(conn, desktop);
+				desktop.add(createUser).setVisible(true);
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage(), "Erro abrir createUser Button", JOptionPane.ERROR_MESSAGE);
+			}
+		});
+		
+		menuItemClient.addActionListener(e->{
+			try {
+				windowClient client = new windowClient(conn);
+				desktop.add(client).setVisible(true);
+			} catch (ParseException e1) {
+				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage(), "Erro abrir WindowClient Button", JOptionPane.ERROR_MESSAGE);
+			}
+		});
+		
+		menuItemClientPayment.addActionListener(e->{
+			try {
+				windowCreateUser createUser = new windowCreateUser(conn, desktop);
+				desktop.add(createUser).setVisible(true);
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage(), "Erro abrir createUser Button", JOptionPane.ERROR_MESSAGE);
+			}
+		});
+		
+		
 		btnClient.addActionListener(e->{
-				try {
-					new windowClient().setVisible(true);
-				} catch (ParseException e1) {
-					e1.printStackTrace();
-				}
+			try {
+				windowClient client = new windowClient(conn);
+				desktop.add(client).setVisible(true);
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage(), "Erro abrir WindowClient Button", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 		
 		btnPayent.addActionListener(e->{
-			new windowPayment().setVisible(true);
+			try {
+				windowPayment payment = new windowPayment(conn);
+				desktop.add(payment).setVisible(true);
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage(), "Erro abrir windowPayment Button", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 		
 		btnBackupSystem.addActionListener(e->{
-			
+			classBackup.makeBackup();
 		});
 		
 		btnExit.addActionListener(e->{

@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="ClassImageLibrary"/>
+		<item key="selection" value="20"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="25"/>
+			<item value="getContentPane()"/>
+			<item value="jop"/>
+			<item value="getContentPane"/>
+			<item value=".\\"/>
+			<item value=".//"/>
+			<item value="C:\\WorksSpaces\\ProjectGymUNESC\\ClassLibrary\\"/>
+			<item value="dao"/>
 			<item value="2 - Images"/>
 			<item value="11"/>
 		</list>
 		<list key="replacehistory">
+			<item value="20"/>
+			<item value="panel"/>
+			<item value="C:\\WorksSpaces\\ProjectGymUNESC\\ClassLibrary\\"/>
+			<item value=".\\"/>
+			<item value=".//"/>
 			<item value="ClassImageLibrary"/>
 			<item value="12"/>
 		</list>

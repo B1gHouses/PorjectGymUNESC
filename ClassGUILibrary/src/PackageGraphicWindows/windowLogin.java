@@ -2,18 +2,15 @@ package PackageGraphicWindows;
 
 import java.awt.Font;
 import java.sql.Connection;
-import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
 import PackageDatabase.connectionFactory;
-import PackageDatabase.dao.UsuarioDAO;
-import PackageDatabase.model.Usuario;
+import PackageDatabase.dao.DAOuser;
+import PackageDatabase.model.modelUser;
 
 public class windowLogin extends JDialog{
 
@@ -26,6 +23,8 @@ public class windowLogin extends JDialog{
 	
 	JButton btnLogin = new JButton();
 	JButton btnCancel = new JButton();
+	
+	Connection conn;
 	
 	public windowLogin () { 
 		setSize(500, 200);
@@ -61,7 +60,7 @@ public class windowLogin extends JDialog{
 		txfPassword.setFont(new Font(Font.MONOSPACED, Font.BOLD, 11));
 		getContentPane().add(txfPassword);
 		
-		btnCancel = new JButton("Cancelar");
+		btnCancel = new JButton("Cancelar");	
 		btnCancel.setBounds(125, 90, 100, 25);
 		btnCancel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 11));
 		getContentPane().add(btnCancel);
@@ -74,31 +73,42 @@ public class windowLogin extends JDialog{
 	
 	public void actionsButtons() {
 		btnLogin.addActionListener(e->{
+			String username = txfLogin.getText();
+			String password = new String(txfPassword.getPassword());
+			dispose();
+			new windowMenu(conn, txfLogin.getText(), 0).setVisible(true);
 			
-			try {
-				Connection conn = connectionFactory.getConnection("localhost", 3306, "ACADEMY_MASTER", "root", "root");
-				
-				if(conn!=null) {
-					UsuarioDAO users = new UsuarioDAO(conn);
-					
-					List<Object> listUsers = users.Select(null);
-					
-					for(int i=0; i<listUsers.size(); i++) {
-						Usuario user = (Usuario)listUsers.get(i);
-						System.out.println("user: " + user.getUsuario() + "password: " + user.getSenha());
-					}
-					
+			/*try {
+				if(username.isEmpty()) {
+					throw new Exception("Campo Usuario Vazio");
+				}else
+				if(password.isEmpty()) {
+					throw new Exception("Campo Senha Vazio");
 				}
+				
+				conn = connectionFactory.getConnection("localhost", 3306, "academy_primal", "root", "root");
+
+				if(conn != null) {
+					
+					DAOuser dao = new DAOuser(conn);
+					ModelUser user = dao.SelectLogin(username, password);
+					if(user != null) {
+						dispose();
+						new windowMenu(conn, txfLogin.getText(), user.getProfile()).setVisible(true);
+					}else {
+						JOptionPane.showMessageDialog(null, "Usuario ou senha invalidos");
+					}
+				}
+				
 				
 				
 				
 			}catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage());
-			}
-			
+			}	*/
 		});
 		btnCancel.addActionListener(e->{
 			dispose();
 		});
-	}
+	}	
 }
