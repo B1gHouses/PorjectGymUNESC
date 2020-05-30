@@ -75,10 +75,10 @@ public class windowLogin extends JDialog{
 		btnLogin.addActionListener(e->{
 			String username = txfLogin.getText();
 			String password = new String(txfPassword.getPassword());
-			dispose();
-			new windowMenu(conn, txfLogin.getText(), 0).setVisible(true);
+			//dispose();
+			//new windowMenu(conn, txfLogin.getText(), 0).setVisible(true);
 			
-			/*try {
+			try {
 				if(username.isEmpty()) {
 					throw new Exception("Campo Usuario Vazio");
 				}else
@@ -91,7 +91,7 @@ public class windowLogin extends JDialog{
 				if(conn != null) {
 					
 					DAOuser dao = new DAOuser(conn);
-					ModelUser user = dao.SelectLogin(username, password);
+					modelUser user = dao.SelectLogin(username, password);
 					if(user != null) {
 						dispose();
 						new windowMenu(conn, txfLogin.getText(), user.getProfile()).setVisible(true);
@@ -105,7 +105,7 @@ public class windowLogin extends JDialog{
 				
 			}catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage());
-			}	*/
+			}	
 		});
 		btnCancel.addActionListener(e->{
 			dispose();

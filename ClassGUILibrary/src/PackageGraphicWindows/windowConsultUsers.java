@@ -42,10 +42,13 @@ public class windowConsultUsers extends JInternalFrame implements Observable{
 	private JButton btnDelete = new JButton();
 	private JButton btnOk = new JButton();
 	
-	private DAOuser dao;
+	
 	
 	private List<Observer> listObs = new ArrayList<Observer>();
+	
 	List<Object> obj;
+	
+	private DAOuser dao;
 	
 	private HashMap<Integer, String> hsmProfile = new HashMap<Integer, String>();
 	
@@ -169,7 +172,7 @@ public class windowConsultUsers extends JInternalFrame implements Observable{
 		user.setIdCode(Integer.parseInt(tblUsers.getValueAt(tblUsers.getSelectedRow(), 0).toString()));
 		
 		try {
-			if (user.getUser() == "super") {return;}
+			if (user.getUser() == "admin") {return;}
 			dao.Delete(user);
 			JOptionPane.showMessageDialog(null, "Usuário Deletado");
 			tblModelUsers.removeRow(tblUsers.getSelectedRow());

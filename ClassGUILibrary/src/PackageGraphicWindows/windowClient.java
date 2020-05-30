@@ -203,7 +203,7 @@ public class windowClient extends JInternalFrame{
 		panel.add(lblObservation);
 		
 		lblImage = new JLabel();
-		lblImage.setBounds(650, 25, 150, 200);
+		lblImage.setBounds(710, 25, 150, 200);
 		lblImage.setIcon(new ImageIcon("C:\\WorksSpaces\\ProjectGymUNESC\\ClassGUILibrary\\src\\Rodrigo-Guirao-Diaz-300x400.jpg"));
 		panel.add(lblImage);
 		
@@ -302,8 +302,8 @@ public class windowClient extends JInternalFrame{
 		
 		//Buttons
 		
-		btnAddImage = new JButton();
-		btnAddImage.setBounds(826, 300, 35, 25);
+		btnAddImage = new JButton("+");
+		btnAddImage.setBounds(810, 235, 50, 25);
 		btnAddImage.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
 		btnAddImage.setIcon(new ImageIcon("C:\\Users\\victo\\Desktop\\ProjectGymUNESC\\2 - Images\\src\\48x48\\plus.png"));
 		panel.add(btnAddImage);

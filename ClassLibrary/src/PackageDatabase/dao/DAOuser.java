@@ -126,4 +126,11 @@ public class DAOuser extends AbstractDAO{
 		PSdeleteUser.execute();
 	}
 
+
+	@Override
+	public List<Object> SelectWithOutParameter() throws SQLException {
+
+		return null;
+	}
+
 }

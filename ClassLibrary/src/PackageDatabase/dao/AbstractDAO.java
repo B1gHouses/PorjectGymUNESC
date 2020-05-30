@@ -17,7 +17,12 @@ public abstract class AbstractDAO {
 	 * Select Method.
 	 */
 	public abstract List<Object> Select(Object as_parameter) throws SQLException;
-
+	
+	/**
+	 * Select Method Without Parameters.
+	 */
+	public abstract List<Object> SelectWithOutParameter() throws SQLException;
+	
 	/**
 	 * Insert Method.
 	 */
@@ -27,7 +32,7 @@ public abstract class AbstractDAO {
 	 * Update Method.
 	 */
 	public abstract void Update(Object ao_object) throws SQLException;
-
+	
 	/**
 	 * Delete Method.
 	 */

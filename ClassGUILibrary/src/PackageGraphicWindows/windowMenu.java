@@ -2,6 +2,7 @@ package PackageGraphicWindows;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.text.ParseException;
 
@@ -9,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -43,6 +45,8 @@ public class windowMenu extends JFrame{
 		private JButton btnExit = new JButton();	
 		
 		private JDesktopPane desktop = new JDesktopPane();
+		
+
 		
 		private Connection conn;
 
@@ -168,7 +172,12 @@ public class windowMenu extends JFrame{
 		
 		
 	}
-
+	
+	private windowClient windowClient; 
+	private windowConfigure windowConfigure;
+	private windowCreateUser windowCreateUser;
+	private windowPayment windowPayment;
+	
 	public void actionsButtons() {
 		
 		menuItemExit.addActionListener(e->{
@@ -177,8 +186,16 @@ public class windowMenu extends JFrame{
 		
 		menuItemConfigure.addActionListener(e->{
 			try {
-				windowConfigure configure = new windowConfigure(conn);
-				desktop.add(configure).setVisible(true);
+				if(windowConfigure == null) {
+					windowConfigure = new windowConfigure(conn);
+				}
+				
+				if(CheckWindow(windowConfigure.getName())) {
+					windowFocus(windowConfigure);
+				}else {
+					windowConfigure.setName("windowConfigure");
+					desktop.add(windowConfigure).setVisible(true);	
+				}
 			} catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage(), "Erro abrir windowConfigure Button", JOptionPane.ERROR_MESSAGE);
 			}
@@ -186,8 +203,16 @@ public class windowMenu extends JFrame{
 		
 		menuItemCreateUser.addActionListener(e->{
 			try {
-				windowCreateUser createUser = new windowCreateUser(conn, desktop);
-				desktop.add(createUser).setVisible(true);
+				if(windowCreateUser == null) {
+					windowCreateUser = new windowCreateUser(conn, desktop);
+				}
+				
+				if(CheckWindow(windowCreateUser.getName())) {
+					windowFocus(windowCreateUser);
+				}else {
+					windowCreateUser.setName("windowCreateUser");
+					desktop.add(windowCreateUser).setVisible(true);	
+				}
 			} catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage(), "Erro abrir createUser Button", JOptionPane.ERROR_MESSAGE);
 			}
@@ -195,8 +220,16 @@ public class windowMenu extends JFrame{
 		
 		menuItemClient.addActionListener(e->{
 			try {
-				windowClient client = new windowClient(conn);
-				desktop.add(client).setVisible(true);
+				if(windowClient == null) {
+					windowClient = new windowClient(conn);
+				}
+				
+				if(CheckWindow(windowClient.getName())) {
+					windowFocus(windowClient);
+				}else {
+					windowClient.setName("windowClient");
+					desktop.add(windowClient).setVisible(true);	
+				}
 			} catch (ParseException e1) {
 				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage(), "Erro abrir WindowClient Button", JOptionPane.ERROR_MESSAGE);
 			}
@@ -204,8 +237,16 @@ public class windowMenu extends JFrame{
 		
 		menuItemClientPayment.addActionListener(e->{
 			try {
-				windowCreateUser createUser = new windowCreateUser(conn, desktop);
-				desktop.add(createUser).setVisible(true);
+				if(windowPayment == null) {
+					windowPayment = new windowPayment(conn);
+				}
+				
+				if(CheckWindow(windowPayment.getName())) {
+					windowFocus(windowPayment);
+				}else {
+					windowPayment.setName("windowPayment");
+					desktop.add(windowPayment).setVisible(true);	
+				}
 			} catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage(), "Erro abrir createUser Button", JOptionPane.ERROR_MESSAGE);
 			}
@@ -214,8 +255,16 @@ public class windowMenu extends JFrame{
 		
 		btnClient.addActionListener(e->{
 			try {
-				windowClient client = new windowClient(conn);
-				desktop.add(client).setVisible(true);
+				if(windowClient == null) {
+					windowClient = new windowClient(conn);
+				}
+				
+				if(CheckWindow(windowClient.getName())) {
+					windowFocus(windowClient);
+				}else {
+					windowClient.setName("windowClient");
+					desktop.add(windowClient).setVisible(true);	
+				}
 			} catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage(), "Erro abrir WindowClient Button", JOptionPane.ERROR_MESSAGE);
 			}
@@ -223,8 +272,17 @@ public class windowMenu extends JFrame{
 		
 		btnPayent.addActionListener(e->{
 			try {
-				windowPayment payment = new windowPayment(conn);
-				desktop.add(payment).setVisible(true);
+				if(windowPayment == null) {
+					windowPayment = new windowPayment(conn);
+				}else {
+					if(CheckWindow(windowPayment.getName())) {
+						windowFocus(windowPayment);
+					}else {
+						windowPayment.setName("windowPayment");
+						desktop.add(windowPayment).setVisible(true);	
+					}	
+				}
+				
 			} catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage(), "Erro abrir windowPayment Button", JOptionPane.ERROR_MESSAGE);
 			}
@@ -238,7 +296,28 @@ public class windowMenu extends JFrame{
 			dispose();
 			new windowLogin().setVisible(true);
 		});
-		
-
 	}
+	
+	
+	private boolean CheckWindow(final String windowName) {
+		
+		JInternalFrame[] windows = desktop.getAllFrames();
+		
+		for(JInternalFrame frame : windows) {
+			if(frame.getName().equals(windowName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private void windowFocus(final JInternalFrame frame) {
+		try {
+			frame.setSelected(true);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage(), "Erro Focar Function", JOptionPane.ERROR_MESSAGE);
+		}
+		
+	}
+	
 }
