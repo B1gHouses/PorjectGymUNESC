@@ -13,26 +13,28 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
 import PackageDatabase.dao.DAOdegree;
 import PackageDatabase.dao.DAOmodality;
-import PackageDatabase.dao.DAOuser;
+import PackageDatabase.dao.DAOplans;
 import PackageDatabase.model.modelDegree;
 import PackageDatabase.model.modelModality;
-import PackageDatabase.model.modelUser;
+import PackageDatabase.model.modelPlans;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Vector;
 
 @SuppressWarnings("serial")
 public class windowConfigure extends JInternalFrame{
 	
 	List<Object> objmoda;
 	List<Object> objdegree;
+	List<Object> objplans;
 	
 	private DAOmodality daoModality;
 	private DAOdegree daoDegree;
+	private DAOplans daoPlans;
 	
 	private Connection conn;
 	//private String[] combBoxtextPrinters = new String[] {"Selecione"/*mapear impressoras*/};		
@@ -51,13 +53,11 @@ public class windowConfigure extends JInternalFrame{
 	
 	private JLabel lblPrinter = new JLabel();
 	private JLabel lblModality = new JLabel();
-	private JLabel lblValue = new JLabel();
-	private JLabel lblDays = new JLabel();
+	private JLabel lblPlan = new JLabel();
 	private JLabel lblDegree = new JLabel();
 	
 	private JTextField txfModality = new JTextField();
-	private JTextField txfValue = new JTextField();
-	private JTextField txfDays = new JTextField();
+	private JTextField txfPlan = new JTextField();
 	private JTextField txfDegree = new JTextField();
 	
 	private JButton btnCancel = new JButton();
@@ -87,6 +87,7 @@ public class windowConfigure extends JInternalFrame{
 		try {
 			daoModality = new DAOmodality(conn);	
 			daoDegree = new DAOdegree(conn);
+			daoPlans = new DAOplans(conn);
 		}catch (Exception e) {
 			
 		}
@@ -185,8 +186,7 @@ public class windowConfigure extends JInternalFrame{
 		
 		if (tblModelplan.getColumnCount() == 0) {
 			tblModelplan.addColumn("Modalidade");
-			tblModelplan.addColumn("Valor");
-			tblModelplan.addColumn("Dias");
+			tblModelplan.addColumn("Planos");
 		}
 		
 		tblPlan = new JTable(tblModelplan);
@@ -195,6 +195,8 @@ public class windowConfigure extends JInternalFrame{
 		panel.add(spnPlan);
 		tblPlan.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
+		loadDataTblPlans();
+		
 		//Labels
 		
 		lblModality = new JLabel("Modalidade");
@@ -202,27 +204,19 @@ public class windowConfigure extends JInternalFrame{
 		lblModality.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
 		panel.add(lblModality);
 		
-		lblValue = new JLabel("Valor");
-		lblValue.setBounds(125, 45, 100, 20);
-		lblValue.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
-		panel.add(lblValue);
-		
-		lblDays = new JLabel("Dias Equivalentes");
-		lblDays.setBounds(125, 70, 150, 20);
-		lblDays.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
-		panel.add(lblDays);
+		lblPlan = new JLabel("Plano");
+		lblPlan.setBounds(125, 45, 100, 20);
+		lblPlan.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
+		panel.add(lblPlan);
+
 		
 		//Textbox
 		
-		txfValue = new JTextField();
-		txfValue.setBounds(250, 45, 200, 20);
-		txfValue.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
-		panel.add(txfValue);
-		
-		txfDays = new JTextField();
-		txfDays.setBounds(250, 70, 200, 20);
-		txfDays.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
-		panel.add(txfDays);
+		txfPlan = new JTextField();
+		txfPlan.setBounds(250, 45, 200, 20);
+		txfPlan.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
+		panel.add(txfPlan);
+
 		
 		//ComboBox
 		
@@ -286,6 +280,8 @@ public class windowConfigure extends JInternalFrame{
 		panel.add(spnDegree);
 		tblDegree.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
+		loadDataTblDegree();
+		
 		lblModality = new JLabel("Modalidade");
 		lblModality.setBounds(125, 20, 100, 20);
 		lblModality.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
@@ -301,7 +297,7 @@ public class windowConfigure extends JInternalFrame{
 		txfDegree.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
 		panel.add(txfDegree);
 		
-		cbModality = new JComboBox<String>();
+		cbModality = new JComboBox<String>(loadDataAllModalitys());
 		cbModality.setBounds(200, 20, 200, 20);
 		cbModality.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
 		panel.add(cbModality);
@@ -357,7 +353,7 @@ public class windowConfigure extends JInternalFrame{
 		panel.add(spnModality);
 		tblModality.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		tblModelModality.addRow(loadDataAllModalitys());
+		loadDataTblModality();
 		
 		lblModality = new JLabel("Modalidade");
 		lblModality.setBounds(125, 20, 100, 20);
@@ -429,44 +425,31 @@ public class windowConfigure extends JInternalFrame{
 			buildWindowDegree();
 		});
 		
-	/*	btnSaveModality.addActionListener(e->{
-			ArrayList<String> numdata = new ArrayList<String>();
-			for (int count = 0; count < tblModelModality.getRowCount(); count++){
-				  numdata.add(tblModelModality.getValueAt(count, 0).toString());
-				}
-			
-			ArrayList<String> data = numdata;
-			
-			try {
-				modelModality modality = new modelModality();
-				 //modality.setModality(numdata);
-
-				 
-				 DAOmodality dao = new DAOmodality(conn);
-				 dao.Insert(modality);
-				 
-				 JOptionPane.showMessageDialog(null, "Usuário Inserido");
-				 
-				}catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "Erro ao Inserir o usuário: " + e1.getMessage());
-				}
-		});*/
-		
 		btnOKPlan.addActionListener(e->{
 			
-			if(txfValue.getText().equals("") || txfDays.getText().equals("")) {
+			if(txfPlan.getText().equals("")) {
 				JOptionPane.showMessageDialog(null, "Campo Posição Invalido");
 				return;
 			}
 
 			String combBoxTextModality = (String)cbModality.getSelectedItem();
 			
-			String[] vector = new String[] {combBoxTextModality, txfValue.getText(), txfDays.getText()};
+			tblModelplan.addRow(new String[] {combBoxTextModality, txfPlan.getText()});
 			
-			tblModelplan.addRow(vector);
+			try {
+				
+				modelPlans plans = new modelPlans();
+				plans.setModality(combBoxTextModality);
+				plans.setPlans(txfPlan.getText());
+				
+				DAOplans dao = new DAOplans(conn);
+				dao.Insert(plans);
+				
+			} catch (SQLException e1) {
+				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage(), "Erro abrir Insert Degree", JOptionPane.ERROR_MESSAGE);
+			}
 			
-			txfValue.setText("");		
-			txfDays.setText("");	
+			txfPlan.setText("");	
 		});
 		
 		btnOKDegree.addActionListener(e->{
@@ -477,6 +460,18 @@ public class windowConfigure extends JInternalFrame{
 			String combBoxTextModality = (String)cbModality.getSelectedItem();
 			
 			tblModelDegree.addRow(new String[] {combBoxTextModality, txfDegree.getText()});
+			
+			try {
+				
+				modelDegree degree = new modelDegree();
+				degree.setDegree(txfDegree.getText());
+				degree.setModality(combBoxTextModality);
+				DAOdegree dao = new DAOdegree(conn);
+				dao.Insert(degree);
+				
+			} catch (SQLException e1) {
+				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage(), "Erro abrir Insert Degree", JOptionPane.ERROR_MESSAGE);
+			}
 			
 			txfDegree.setText("");
 		});
@@ -492,7 +487,7 @@ public class windowConfigure extends JInternalFrame{
 			try {
 				
 				modelModality modality = new modelModality();
-				 modality.setModality(txfModality.getText());
+				modality.setModality(txfModality.getText());
 				
 				DAOmodality dao = new DAOmodality(conn);
 				dao.Insert(modality);
@@ -505,6 +500,22 @@ public class windowConfigure extends JInternalFrame{
 		});
 		
 		btnLessTblDegree.addActionListener(e->{
+			
+			try {
+				if (tblDegree.getSelectedRow() < 0){return;}
+				
+				modelDegree degree = new modelDegree();
+				degree.setModality(tblDegree.getValueAt(tblDegree.getSelectedRow(), 0).toString());
+				degree.setDegree(tblDegree.getValueAt(tblDegree.getSelectedRow(), 1).toString());
+				
+				DAOdegree dao = new DAOdegree(conn);
+				dao.Delete(degree);
+				
+			} catch (SQLException e1) {
+				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage(), "Erro Delete Degree", JOptionPane.ERROR_MESSAGE);
+			}
+			
+			
 			if (tblDegree.getSelectedRow() >= 0){
 				tblModelDegree.removeRow(tblDegree.getSelectedRow());
 				tblDegree.setModel(tblModelDegree);
@@ -514,6 +525,19 @@ public class windowConfigure extends JInternalFrame{
 		});
 		
 		btnLessTblModality.addActionListener(e->{
+			try {
+				if (tblModality.getSelectedRow() < 0){return;}
+				
+				modelModality modality = new modelModality();
+				modality.setModality(tblModality.getValueAt(tblModality.getSelectedRow(), 0).toString());
+				
+				DAOmodality dao = new DAOmodality(conn);
+				dao.Delete(modality);
+				
+			} catch (SQLException e1) {
+				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage(), "Erro Delete Modality", JOptionPane.ERROR_MESSAGE);
+			}
+			
 			if (tblModality.getSelectedRow() >= 0){
 				tblModelModality.removeRow(tblModality.getSelectedRow());
 				tblModality.setModel(tblModelModality);
@@ -522,9 +546,45 @@ public class windowConfigure extends JInternalFrame{
 		    }
 		});
 		
+		
+		btnLessTblPlan.addActionListener(e->{
+			try {
+				if (tblPlan.getSelectedRow() < 0){return;}
+				
+				modelPlans plans = new modelPlans();
+				plans.setModality(tblPlan.getValueAt(tblPlan.getSelectedRow(), 0).toString());
+				plans.setPlans(tblPlan.getValueAt(tblPlan.getSelectedRow(), 1).toString());
+				DAOplans dao = new DAOplans(conn);
+				dao.Delete(plans);
+				
+			} catch (SQLException e1) {
+				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage(), "Erro Delete Modality", JOptionPane.ERROR_MESSAGE);
+			}
+			
+			if (tblPlan.getSelectedRow() >= 0){
+				tblModelplan.removeRow(tblPlan.getSelectedRow());
+				tblPlan.setModel(tblModelplan);
+		    }else{
+		        JOptionPane.showMessageDialog(null, "Favor selecionar uma linha");
+		    }
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		btnCancel.addActionListener(e->{
 			dispose();
 		});
+		
+		
+		
+		
+		
 	}
 	
 	private void clearTable() {
@@ -542,27 +602,62 @@ public class windowConfigure extends JInternalFrame{
 		
 	}
 	
-	private String[] loadDataAllModalitys() {
+	private Vector<String> loadDataAllModalitys() {
+		
+		Vector<String> vcModality = new Vector<String>();
+		
 		try {
-			String[] str = new String[] {};
 			objmoda = daoModality.SelectWithOutParameter();	
-			objdegree = daoDegree.SelectWithOutParameter();	
 			
 			for(Object ob : objmoda) {
-				for(Object obj : objdegree) {
 				modelModality modality = (modelModality) ob;
-				modelDegree degree = (modelDegree) obj;
-				
-				tblModelDegree.addRow(new String[] {modality.getModality(), degree.getDegree()});
-				tblModelModality.addRow(new String[] {modality.getModality()});
-				//cbModality = new JComboBox<String>(loadDataAllModalitys());
-				}
+				vcModality.add(modality.getModality());
 			}
-			
 		}catch (Exception e1) {
 			JOptionPane.showMessageDialog(null, "Erro Carregar dados na table: " + e1.getMessage());
 		}
-		return null;
+		return vcModality;
 	}
+	
+	private void loadDataTblModality(){
+		try {
+			objmoda = daoModality.SelectWithOutParameter();	
+			
+			for(Object ob : objmoda) {
+				modelModality modality = (modelModality) ob;
+				tblModelModality.addRow(new String[] {modality.getModality()});
+			}
+		}catch (Exception e1) {
+			JOptionPane.showMessageDialog(null, "Erro Carregar dados na table: " + e1.getMessage());
+		}
+		
+	}
+	
+	private void loadDataTblDegree() {
+		try {
+			objdegree = daoDegree.SelectWithOutParameter();	
+			
+			for(Object ob : objdegree) {
+				modelDegree degree = (modelDegree) ob;
+				tblModelDegree.addRow(new String[] {degree.getModality(), degree.getDegree()});
+			}
+		}catch (Exception e1) {
+			JOptionPane.showMessageDialog(null, "Erro Carregar dados na table: " + e1.getMessage());
+		}
+	}
+	
+	private void loadDataTblPlans() {
+		try {
+			objplans = daoPlans.SelectWithOutParameter();	
+			
+			for(Object ob : objplans) {
+				modelPlans plans = (modelPlans) ob;
+				tblModelplan.addRow(new String[] {plans.getModality(), plans.getPlans()});
+			}
+		}catch (Exception e1) {
+			JOptionPane.showMessageDialog(null, "Erro Carregar dados na table: " + e1.getMessage());
+		}
+	}
+	
 	
 }

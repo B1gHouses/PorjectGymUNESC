@@ -2,10 +2,8 @@ package PackageGraphicWindows;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.text.ParseException;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
@@ -204,7 +202,7 @@ public class windowMenu extends JFrame{
 		menuItemCreateUser.addActionListener(e->{
 			try {
 				if(windowCreateUser == null) {
-					windowCreateUser = new windowCreateUser(conn, desktop);
+					windowCreateUser = new windowCreateUser(conn);
 				}
 				
 				if(CheckWindow(windowCreateUser.getName())) {

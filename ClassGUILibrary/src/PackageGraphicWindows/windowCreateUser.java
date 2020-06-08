@@ -2,12 +2,8 @@ package PackageGraphicWindows;
 
 import java.awt.Font;
 import java.sql.Connection;
-import java.text.ParseException;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDesktopPane;
-import javax.swing.JDialog;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,6 +16,7 @@ import PackageClassLibrary.Observer;
 import PackageDatabase.dao.DAOuser;
 import PackageDatabase.model.modelUser;
 
+@SuppressWarnings("serial")
 public class windowCreateUser extends JInternalFrame implements Observer{
 	
 	private Connection conn;
@@ -42,13 +39,14 @@ public class windowCreateUser extends JInternalFrame implements Observer{
 	JComboBox<String> cbProfile = new JComboBox<>();
 	
 	JPanel panel = new JPanel();
-	JDesktopPane desktop = new JDesktopPane();
-	public windowCreateUser (Connection conn, final JDesktopPane desktop) {
+
+	public windowCreateUser (Connection conn) {
 		this.conn = conn;
-		this.desktop = desktop;
 		
 		setSize(370,220);
 		setTitle("Criar Usuário");
+		setResizable(false);
+		
 		setIconifiable(true);
 		setMaximizable(false);
 		setClosable(true);
@@ -131,22 +129,23 @@ public class windowCreateUser extends JInternalFrame implements Observer{
 			int profile = cbProfile.getSelectedIndex();
 			
 			if (validations() == true) {return;}
+			
 			try {
-			 modelUser user = new modelUser();
-			 user.setUser(username);
-			 user.setPassword(password);
-			 user.setProfile(profile - 1);
-			 
-			 DAOuser dao = new DAOuser(conn);
-			 dao.Insert(user);
-			 
-			 JOptionPane.showMessageDialog(null, "Usuário Inserido");
-			 
-			 txfUsername.setText("");
-			 txfPassword.setText("");
-			 txfConfirmPassword.setText("");
-			 cbProfile.setSelectedIndex(0);
-			 
+				modelUser user = new modelUser();
+				user.setUser(username);
+				user.setPassword(password);
+				user.setProfile(profile - 1);
+				 
+				DAOuser dao = new DAOuser(conn);
+				dao.Insert(user);
+				 
+				JOptionPane.showMessageDialog(null, "Usuário Inserido");
+				 
+				txfUsername.setText("");
+				txfPassword.setText("");
+				txfConfirmPassword.setText("");
+				cbProfile.setSelectedIndex(0);
+ 
 			}catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, "Erro ao Inserir o usuário: " + e1.getMessage());
 			}
@@ -154,12 +153,9 @@ public class windowCreateUser extends JInternalFrame implements Observer{
 		
 		
 		btnConsult.addActionListener(e->{
-			try {
-				windowConsultUsers consultUsers = new windowConsultUsers(conn, windowCreateUser.this);
-				desktop.add(consultUsers).setVisible(true);
-			} catch (Exception e1) {
-				JOptionPane.showMessageDialog(null, "Erro: " + e1.getMessage(), "Erro abrir WindowClient Button", JOptionPane.ERROR_MESSAGE);
-			}
+
+				new windowConsultUsers(windowCreateUser.this).setVisible(true);
+
 		});
 		
 		btnCancel.addActionListener(e->{

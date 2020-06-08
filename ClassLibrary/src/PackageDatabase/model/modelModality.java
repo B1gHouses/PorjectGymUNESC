@@ -1,7 +1,5 @@
 package PackageDatabase.model;
 
-import java.util.ArrayList;
-
 public class modelModality {
 	private int idModality;
 	private String modality;
@@ -24,8 +22,8 @@ public class modelModality {
 	public String getModality() {
 		return modality;
 	}
-	public void setModality(String vector) {
-		this.modality = vector;
+	public void setModality(String modality) {
+		this.modality = modality;
 	}
 	
 }

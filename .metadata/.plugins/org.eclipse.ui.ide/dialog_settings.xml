@@ -11,6 +11,10 @@
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="E:\WorksSpaces\ProjectGymUNESC\ProjectMain"/>
+			<item value="E:\WorksSpaces\ProjectGymUNESC\ClassLibrary"/>
+			<item value="E:\WorksSpaces\ProjectGymUNESC\ClassImageLibrary"/>
+			<item value="E:\WorksSpaces\ProjectGymUNESC\ClassGUILibrary"/>
 			<item value="C:\WorksSpaces\ProjectGymUNESC\ClassGUILibrary"/>
 			<item value="C:\WorksSpaces\ProjectGymUNESC\ClassImageLibrary"/>
 			<item value="C:\WorksSpaces\ProjectGymUNESC\ClassLibrary"/>

@@ -1,16 +1,11 @@
 package PackageGraphicWindows;
 
 import java.awt.Font;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JButton;
-import javax.swing.JDesktopPane;
 import javax.swing.JDialog;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -25,10 +20,9 @@ import PackageClassLibrary.Observer;
 import PackageDatabase.dao.DAOuser;
 import PackageDatabase.model.modelUser;
 
-public class windowConsultUsers extends JInternalFrame implements Observable{
+@SuppressWarnings("serial")
+public class windowConsultUsers extends JDialog implements Observable{
 
-	private Connection conn;
-	
 	private JTable tblUsers;
 	private JScrollPane spnUsers;
 	private DefaultTableModel tblModelUsers = new DefaultTableModel(){public boolean isCellEditable(int row, int col) {return false;}};
@@ -60,23 +54,17 @@ public class windowConsultUsers extends JInternalFrame implements Observable{
 	
 	JPanel panel = new JPanel();
 	
-	public windowConsultUsers (Connection conn, final Observer obs) { 
-		this.conn = conn;
-		try {
-			dao = new DAOuser(conn);	
-		}catch (Exception e) {
-			
-		}
+	public windowConsultUsers (final Observer obs) { 
+
 		AddObserver(obs);
 		setSize(400,270);
 		setTitle("Consular Clientes");
 		
-		setIconifiable(true);
-		setMaximizable(false);
-		setClosable(true);
-		setResizable(false);
-		setLocation(450, 200);
-		setResizable(false);
+		setLocationRelativeTo(null);
+		setLayout(null);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setModal(true);
+		
 		
 		buildWindow();
 		actionsButtons();

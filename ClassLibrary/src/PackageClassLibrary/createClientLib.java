@@ -3,7 +3,6 @@ package PackageClassLibrary;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;

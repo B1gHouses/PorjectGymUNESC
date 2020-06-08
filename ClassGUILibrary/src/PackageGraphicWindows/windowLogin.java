@@ -12,6 +12,7 @@ import PackageDatabase.connectionFactory;
 import PackageDatabase.dao.DAOuser;
 import PackageDatabase.model.modelUser;
 
+@SuppressWarnings("serial")
 public class windowLogin extends JDialog{
 
 	JLabel lblLogin = new JLabel();
